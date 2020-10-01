@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface AdresseLivraisonRepository extends JpaRepository<AdresseLivraison,Long> {
+public interface AdresseLivraisonRepository extends JpaRepository<AdresseLivraison, Long> {
 
     boolean existsByClientIdAndPrimaryTrue(long idClient);
 

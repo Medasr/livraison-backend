@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -70,7 +69,7 @@ public class Commande implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Commande obj = (Commande) o;
 
@@ -85,12 +84,12 @@ public class Commande implements Serializable {
 
 
     public enum Etat {
-            CREER,
-            ANNULEE,
-            EN_COURS_PREPARATION,
-            EN_ATTENDE_LIVREUR,
-            EN_ATTENDE_LIVRAISON,
-            LIVREE
+        CREER,
+        ANNULEE,
+        EN_COURS_PREPARATION,
+        EN_ATTENDE_LIVREUR,
+        EN_ATTENDE_LIVRAISON,
+        LIVREE
     }
 }
 

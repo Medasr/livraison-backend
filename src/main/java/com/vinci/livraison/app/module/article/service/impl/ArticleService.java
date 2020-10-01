@@ -19,7 +19,6 @@ import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
-public class ArticleService implements IArticleService , IPruduitService , IMenuService {
+public class ArticleService implements IArticleService, IPruduitService, IMenuService {
 
     ArticleRepository article$;
 
@@ -43,17 +42,17 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
     @Override
     public Optional<Article> findArticleByIdAndRestaurateur(Long idArticle, Restaurateur restaurateur) {
-        return article$.findArticleByIdAndRestaurateur(idArticle,restaurateur);
+        return article$.findArticleByIdAndRestaurateur(idArticle, restaurateur);
     }
 
     @Override
     public Page<Article> findArticlesByRestaurateur(Restaurateur restaurateur, Pageable pageable) {
-        return article$.findArticlesByRestaurateur(restaurateur,pageable);
+        return article$.findArticlesByRestaurateur(restaurateur, pageable);
     }
 
     @Override
     public Page<Article> findArticlesByCategorie(Categorie categorie, Pageable pageable) {
-        return article$.findArticlesByCategorie(categorie,pageable);
+        return article$.findArticlesByCategorie(categorie, pageable);
     }
 
 
@@ -70,7 +69,7 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
     @Override
     public Article addCategorieToExistingArticle(Article article, Categorie categorie) {
 
-        if (prodCat$.existsByArticleAndCategorie(article,categorie)) {
+        if (prodCat$.existsByArticleAndCategorie(article, categorie)) {
 
             throw new ProdCatAlreadyExistsException("");
         }
@@ -87,14 +86,14 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
         prodCat$.FindByArticleAndCategorie(article, categorie).map(prodCat1 -> {
 
-            if( prodCat$.countByArticle(article) > 1 ){
+            if (prodCat$.countByArticle(article) > 1) {
                 throw new ArticleCantHaveNoCategorie("Article doit appartenir au moins a une seul categorie");
             }
 
             prodCat$.delete(prodCat1);
             return prodCat1;
         }).orElseThrow(() ->
-                new ProdCatNotExistsException("article #["+article.getId()+"] n'appartient pas au catégorie #["+categorie.getId()+"] ")
+                new ProdCatNotExistsException("article #[" + article.getId() + "] n'appartient pas au catégorie #[" + categorie.getId() + "] ")
         );
 
     }
@@ -114,7 +113,7 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
                 .stream()
                 .map(cat -> {
                     article.getCategories().add(cat);
-                    return new ProdCat(article,cat);
+                    return new ProdCat(article, cat);
                 })
                 .collect(Collectors.toList());
 
@@ -129,12 +128,12 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
     @Override
     public Optional<Article> findProduitByIdAndRestaurateur(Long idProduit, Restaurateur restaurateur) {
-        return article$.findProduitByIdAndRestaurateur(idProduit,restaurateur);
+        return article$.findProduitByIdAndRestaurateur(idProduit, restaurateur);
     }
 
     @Override
-    public Page<Article> findProduitsByRestaurateur(Restaurateur restaurateur,Pageable pageable) {
-        return article$.findProduitsByRestaurateur(restaurateur,pageable);
+    public Page<Article> findProduitsByRestaurateur(Restaurateur restaurateur, Pageable pageable) {
+        return article$.findProduitsByRestaurateur(restaurateur, pageable);
     }
 
     @Override
@@ -152,7 +151,7 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
                 .stream()
                 .map(cat -> {
                     menu.getCategories().add(cat);
-                    return new ProdCat(menu,cat);
+                    return new ProdCat(menu, cat);
                 })
                 .collect(Collectors.toList());
 
@@ -162,11 +161,11 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
         prodCat$.saveAll(ProdCats);
 
-        List<ProdMenu> prodMenus= article$.findProduitsByIdInRestaurateur(form.getProduits(),restaurateur)
+        List<ProdMenu> prodMenus = article$.findProduitsByIdInRestaurateur(form.getProduits(), restaurateur)
                 .stream()
                 .map(article1 -> {
                     menu.getProduits().add(article1);
-                    return new ProdMenu(menu,article1);
+                    return new ProdMenu(menu, article1);
                 }).collect(Collectors.toList());
 
         if (prodMenus.isEmpty()) {
@@ -180,12 +179,12 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
     @Override
     public Optional<Article> findMenuByIdAndRestaurateur(Long idMenu, Restaurateur restaurateur) {
-        return article$.findMenuByIdAndRestaurateur(idMenu,restaurateur);
+        return article$.findMenuByIdAndRestaurateur(idMenu, restaurateur);
     }
 
     @Override
     public Page<Article> findMenusByRestaurateur(Restaurateur restaurateur, Pageable pageable) {
-        return article$.findMenusByRestaurateur(restaurateur,pageable);
+        return article$.findMenusByRestaurateur(restaurateur, pageable);
     }
 
     @Override
@@ -201,7 +200,7 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
     @Override
     public Article addProduitToExistingMenu(Article Menu, Article Produit) {
-        if (prodMenu$.existsByMenuAndProduit(Menu,Produit)) {
+        if (prodMenu$.existsByMenuAndProduit(Menu, Produit)) {
 
             throw new ProdMenuAlreadyExistsException("");
         }
@@ -217,14 +216,14 @@ public class ArticleService implements IArticleService , IPruduitService , IMenu
 
         prodMenu$.findByMenuAndProduit(Menu, Produit).map(prodmenu -> {
 
-            if( prodMenu$.countByMenu(Menu) > 1 ){
+            if (prodMenu$.countByMenu(Menu) > 1) {
                 throw new MenuCantHaveNoProduit("Menu doit contient au moins un seul Produit");
             }
 
             prodMenu$.delete(prodmenu);
             return prodmenu;
         }).orElseThrow(() ->
-                new ProdMenuNotExistsException("Menu #["+Menu.getId()+"] ne contient pas produit #["+ Produit.getId()+"] ")
+                new ProdMenuNotExistsException("Menu #[" + Menu.getId() + "] ne contient pas produit #[" + Produit.getId() + "] ")
         );
 
     }

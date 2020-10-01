@@ -8,10 +8,8 @@ import com.vinci.livraison.app.module.article.entity.Article;
 import com.vinci.livraison.app.module.article.entity.Categorie;
 import com.vinci.livraison.app.module.article.repository.ArticleRepository;
 import com.vinci.livraison.app.module.client.CreateClientForm;
-import com.vinci.livraison.app.module.client.entity.AdresseLivraison;
 import com.vinci.livraison.app.module.client.entity.Client;
 import com.vinci.livraison.app.module.client.repository.ClientRepository;
-import com.vinci.livraison.app.module.restaurateur.Score;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import com.vinci.livraison.app.module.restaurateur.repository.RestaurateurRepository;
 import lombok.AllArgsConstructor;
@@ -20,16 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @RestController
 @AllArgsConstructor
@@ -54,55 +48,55 @@ public class TestController {
     ArticleRepository articleRepository;
 
 
-    private void init(){
+    private void init() {
 
-        if(adminRepository.count() > 0) return;
+        if (adminRepository.count() > 0) return;
         adminRepository.saveAll(Arrays.asList(
-                new Admin("admin@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin2@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin3@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin4@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin5@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin6@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin7@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
-                new Admin("admin8@dev.info","$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e")
+                new Admin("admin@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin2@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin3@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin4@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin5@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin6@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin7@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e"),
+                new Admin("admin8@dev.info", "$2a$10$aIzzdWbsv9pAVsqCKRqITekOb/z.mK4kbbNrBNwWw1pmMQV.XEC1e")
         ));
     }
 
     @GetMapping("testqueryparam")
-    public ResponseEntity testQueryParam(@RequestBody(required = false) MyQueryParams paramsbody,MyQueryParams params,@RequestParam String prop2){
+    public ResponseEntity testQueryParam(@RequestBody(required = false) MyQueryParams paramsbody, MyQueryParams params, @RequestParam String prop2) {
 
-        return ResponseEntity.ok(Arrays.asList(paramsbody,params,prop2));
+        return ResponseEntity.ok(Arrays.asList(paramsbody, params, prop2));
 
     }
 
-    @GetMapping(value = "testqueryparam",params = {"prop2"})
-    public ResponseEntity testQuery$Param(@RequestBody(required = false) MyQueryParams paramsbody,@RequestParam String prop2){
+    @GetMapping(value = "testqueryparam", params = {"prop2"})
+    public ResponseEntity testQuery$Param(@RequestBody(required = false) MyQueryParams paramsbody, @RequestParam String prop2) {
 
-        return ResponseEntity.ok(Arrays.asList(paramsbody,prop2));
+        return ResponseEntity.ok(Arrays.asList(paramsbody, prop2));
 
     }
 
     @GetMapping("testarray")
-    public ResponseEntity testArray(@RequestBody List<TestForm> testForms){
+    public ResponseEntity testArray(@RequestBody List<TestForm> testForms) {
 
         return ResponseEntity.ok(testForms);
 
     }
 
     @Getter
-    public static class TestForm{
+    public static class TestForm {
 
         String prop;
 
     }
 
     @GetMapping("test")
-    public ResponseEntity test(){
+    public ResponseEntity test() {
 
         Categorie categorie = new Categorie();
         categorie.setId(1L);
-        
+
         Restaurateur restaurateur = restaurateurRepository.findById(1L).map(restaurateur$ -> {
 
             restaurateur$.getVille();
@@ -121,8 +115,7 @@ public class TestController {
     }
 
     @PostMapping("create-client")
-    public ResponseEntity home(@RequestBody(required = false) CreateClientForm clientForm,@RequestParam(required = false) List<Long> props) {
-
+    public ResponseEntity home(@RequestBody(required = false) CreateClientForm clientForm, @RequestParam(required = false) List<Long> props) {
 
 
         Categorie categorie = new Categorie();
@@ -147,7 +140,7 @@ public class TestController {
         client.setNom("Med Moussa");
 
         System.out.println("adressse ------");
-        return ResponseEntity.ok(Arrays.asList(clientForm,client,articlesByCategorie));
+        return ResponseEntity.ok(Arrays.asList(clientForm, client, articlesByCategorie));
 
     }
 

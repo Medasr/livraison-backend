@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 
 public class AdresseLivraison implements Serializable {
 
@@ -36,8 +37,9 @@ public class AdresseLivraison implements Serializable {
     private GeoLocation geoLocation;
 
     @Embeddable
-    @Getter @Setter
-    public static class GeoLocation implements Serializable{
+    @Getter
+    @Setter
+    public static class GeoLocation implements Serializable {
         @Column(name = "latitude")
         private Double latitude;
 
@@ -48,7 +50,7 @@ public class AdresseLivraison implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         AdresseLivraison obj = (AdresseLivraison) o;
 

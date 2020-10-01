@@ -1,7 +1,6 @@
 package com.vinci.livraison.app.module.article.entity;
 
 
-import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,7 +38,7 @@ public class Article implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Article article = (Article) o;
 

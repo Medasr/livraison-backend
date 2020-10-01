@@ -23,7 +23,7 @@ public class CategorieService implements ICategorieService {
     CategorieRepository categorie$;
 
     @Override
-    public Categorie createCategorie(Restaurateur restaurateur,Categorie nullableCategorieMere, CreateCategorieForm form) {
+    public Categorie createCategorie(Restaurateur restaurateur, Categorie nullableCategorieMere, CreateCategorieForm form) {
         Categorie categorie = new Categorie();
         categorie.setCategorieMere(nullableCategorieMere);
         categorie.setTitre(form.getTitre());

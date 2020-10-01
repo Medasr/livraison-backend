@@ -23,7 +23,7 @@ public interface IRestaurateurService {
 
     Optional<Restaurateur> findRestaurateurWithScore(Long id);
 
-    Optional<Restaurateur> findRestaurateurByIdAnEnseinge(Long id , Enseigne enseigne);
+    Optional<Restaurateur> findRestaurateurByIdAnEnseinge(Long id, Enseigne enseigne);
 
     Optional<Restaurateur> findRestaurateuByEnseingeWithScore(Long id, Enseigne enseigne);
 
@@ -32,10 +32,6 @@ public interface IRestaurateurService {
     Page<Restaurateur> findRestaurateursByEnseigne(Enseigne enseigne, Pageable pageable);
 
     Page<Restaurateur> findRestaurateursByEnseigne(Enseigne enseigne, boolean shutdown, Pageable pageable);
-
-
-
-
 
 
 }

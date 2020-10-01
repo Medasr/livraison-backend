@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Type implements Serializable {
 
     @Id
@@ -28,7 +29,7 @@ public class Type implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Type obj = (Type) o;
 

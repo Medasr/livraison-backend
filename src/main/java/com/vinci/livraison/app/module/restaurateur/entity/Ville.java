@@ -32,7 +32,7 @@ public class Ville implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Ville obj = (Ville) o;
 

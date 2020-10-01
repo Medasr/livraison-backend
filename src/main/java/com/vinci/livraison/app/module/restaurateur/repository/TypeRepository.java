@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TypeRepository extends JpaRepository<Type,Long> {
+public interface TypeRepository extends JpaRepository<Type, Long> {
 
     List<Type> findAllByTitreContains(String titre);
 

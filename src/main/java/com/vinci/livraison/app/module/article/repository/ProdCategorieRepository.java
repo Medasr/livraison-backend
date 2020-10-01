@@ -7,7 +7,6 @@ import com.vinci.livraison.app.module.article.entity.ProdCat;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

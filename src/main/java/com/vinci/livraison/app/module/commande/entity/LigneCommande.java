@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +16,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"id_commande","id_article"})
+        @UniqueConstraint(columnNames = {"id_commande", "id_article"})
 })
 public class LigneCommande implements Serializable {
 
@@ -46,7 +45,7 @@ public class LigneCommande implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         LigneCommande obj = (LigneCommande) o;
 

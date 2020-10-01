@@ -8,7 +8,8 @@ import lombok.experimental.Accessors;
 import javax.persistence.Entity;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Accessors(chain = true)
 public class Admin extends User {
 

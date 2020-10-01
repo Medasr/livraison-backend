@@ -7,7 +7,7 @@ import java.util.Set;
 @Getter
 public class CreateRestaurateurForm {
 
-    private String nom,adresse,login,password;
+    private String nom, adresse, login, password;
     private Long idVille;
     private Set<Long> types;
 

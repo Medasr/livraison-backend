@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"id_menu","id_produit"})
+        @UniqueConstraint(columnNames = {"id_menu", "id_produit"})
 })
 public class ProdMenu implements Serializable {
 
@@ -26,8 +26,8 @@ public class ProdMenu implements Serializable {
 
 
     public ProdMenu(Article menu, Article produit) {
-        Assert.isTrue(!menu.isMenu(),"");
-        Assert.isTrue(produit.isMenu(),"");
+        Assert.isTrue(!menu.isMenu(), "");
+        Assert.isTrue(produit.isMenu(), "");
         this.menu = menu;
         this.produit = produit;
     }
@@ -45,7 +45,7 @@ public class ProdMenu implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         ProdMenu obj = (ProdMenu) o;
 

@@ -10,7 +10,8 @@ import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Contract implements Serializable {
 
     @Id
@@ -31,7 +32,7 @@ public class Contract implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Contract obj = (Contract) o;
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface ICategorieService {
 
-    Categorie createCategorie(Restaurateur restaurateur,@Nullable Categorie nullableCategorieMere , CreateCategorieForm form);
+    Categorie createCategorie(Restaurateur restaurateur, @Nullable Categorie nullableCategorieMere, CreateCategorieForm form);
 
     Page<Categorie> findCategoriesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
@@ -20,5 +20,5 @@ public interface ICategorieService {
 
     Categorie updateCategorie(Categorie categorie, String nouveauTitre);
 
-    Optional<Categorie> findCategorieByIdAndRestaurateur(long id,Restaurateur restaurateur);
+    Optional<Categorie> findCategorieByIdAndRestaurateur(long id, Restaurateur restaurateur);
 }

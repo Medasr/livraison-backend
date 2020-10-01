@@ -3,8 +3,6 @@ package com.vinci.livraison.app.module.client;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-
 @Getter
 public class CreateClientForm {
 

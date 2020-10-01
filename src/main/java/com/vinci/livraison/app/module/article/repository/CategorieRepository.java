@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface CategorieRepository extends JpaRepository<Categorie,Long> {
+public interface CategorieRepository extends JpaRepository<Categorie, Long> {
 
 
     List<Categorie> findCategoriesByCategorieMere(Categorie parent);

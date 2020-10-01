@@ -27,14 +27,14 @@ public class Categorie implements Serializable {
     @JoinColumn(name = "id_categorie_mere")
     private Categorie categorieMere;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_restaurateur", nullable = false, updatable = false)
     private Restaurateur restaurateur;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Categorie obj = (Categorie) o;
 

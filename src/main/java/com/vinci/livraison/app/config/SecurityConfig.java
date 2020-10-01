@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling(handlingConfigurer ->  handlingConfigurer.accessDeniedHandler((req, res, e) -> res.sendError(403)));
+        http.exceptionHandling(handlingConfigurer -> handlingConfigurer.accessDeniedHandler((req, res, e) -> res.sendError(403)));
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf().disable();
 
@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

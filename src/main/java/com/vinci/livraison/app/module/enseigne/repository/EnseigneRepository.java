@@ -1,6 +1,5 @@
 package com.vinci.livraison.app.module.enseigne.repository;
 
-import com.vinci.livraison.app.module.enseigne.CreateEnseigneForm;
 import com.vinci.livraison.app.module.enseigne.entity.Enseigne;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EnseigneRepository extends JpaRepository<Enseigne,Long> {
+public interface EnseigneRepository extends JpaRepository<Enseigne, Long> {
 
 
     boolean existsByIdAndActiveTrue(long id);
@@ -23,7 +22,7 @@ public interface EnseigneRepository extends JpaRepository<Enseigne,Long> {
 
     Page<Enseigne> findAllByActive(boolean active, Pageable pageable);
 
-    Page<Enseigne> findAllByActiveAndNomContains(boolean active , String nom, Pageable pageable);
+    Page<Enseigne> findAllByActiveAndNomContains(boolean active, String nom, Pageable pageable);
 
     Page<Enseigne> findAllByNomContains(String nom, Pageable pageable);
 

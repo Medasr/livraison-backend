@@ -1,7 +1,5 @@
 package com.vinci.livraison.app.module.commande.service;
 
-import com.vinci.livraison.app.module.client.entity.Client;
-import com.vinci.livraison.app.module.commande.CreateCommandeForm;
 import com.vinci.livraison.app.module.commande.entity.Commande;
 import com.vinci.livraison.app.module.livreur.entity.Livreur;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
@@ -12,7 +10,7 @@ import java.util.Optional;
 
 public interface ICommandeRestaurateurService {
 
-    Optional<Commande> findCommandeByIdAndRestaurateur(long id,Restaurateur restaurateur);
+    Optional<Commande> findCommandeByIdAndRestaurateur(long id, Restaurateur restaurateur);
 
     Page<Commande> findCreatedCommandesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 

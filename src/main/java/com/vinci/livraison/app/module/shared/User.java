@@ -30,7 +30,7 @@ public abstract class User implements Serializable {
     @Column(name = "password", nullable = false)
     protected String password;
 
-    @Column(name = "date_creation",nullable = false,updatable = false)
+    @Column(name = "date_creation", nullable = false, updatable = false)
     protected LocalDateTime dateCreation;
 
     public User(String login, String password) {
@@ -41,7 +41,7 @@ public abstract class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         User obj = (User) o;
 

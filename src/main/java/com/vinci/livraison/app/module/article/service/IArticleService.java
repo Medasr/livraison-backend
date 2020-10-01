@@ -6,12 +6,11 @@ import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface IArticleService {
 
-    Optional<Article> findArticleByIdAndRestaurateur(Long idArticle , Restaurateur restaurateur);
+    Optional<Article> findArticleByIdAndRestaurateur(Long idArticle, Restaurateur restaurateur);
 
     Page<Article> findArticlesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
@@ -22,9 +21,6 @@ public interface IArticleService {
     Article addCategorieToExistingArticle(Article article, Categorie categorie);
 
     void removeCategorieFromExistingArticle(Article article, Categorie categorie);
-
-
-
 
 
 }

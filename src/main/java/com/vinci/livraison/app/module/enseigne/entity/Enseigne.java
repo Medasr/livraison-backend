@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Enseigne implements Serializable {
 
     @Id
@@ -33,7 +34,7 @@ public class Enseigne implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Enseigne obj = (Enseigne) o;
 

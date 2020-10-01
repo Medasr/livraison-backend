@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"id_article","id_categorie"})
+        @UniqueConstraint(columnNames = {"id_article", "id_categorie"})
 },
         name = "prod_cat"
 )
@@ -42,7 +41,7 @@ public class ProdCat implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         ProdCat obj = (ProdCat) o;
 

@@ -6,7 +6,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface UserRepository<T extends User> extends JpaRepository<T,Long> {
+public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
 
     Optional<T> findByLogin(String Login);
 

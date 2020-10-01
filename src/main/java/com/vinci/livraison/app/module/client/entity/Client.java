@@ -28,10 +28,10 @@ public class Client extends User {
 
     private String tel;
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AdresseLivraison> adresses = new HashSet<>();
 
-    public void addAdresse(AdresseLivraison adresse){
+    public void addAdresse(AdresseLivraison adresse) {
         if (adresse.isPrimary()) {
             Optional<AdresseLivraison> addr = adresses.stream()
                     .filter(AdresseLivraison::isPrimary)
@@ -44,22 +44,22 @@ public class Client extends User {
         adresses.add(adresse);
     }
 
-    public void deleteAdresse(AdresseLivraison adresse){
+    public void deleteAdresse(AdresseLivraison adresse) {
         adresses.removeIf(adresseLivraison -> adresse.getId() == adresseLivraison.getId());
     }
 
-    public AdresseLivraison getPrimaryAdresse(){
+    public AdresseLivraison getPrimaryAdresse() {
 
-            return adresses.stream()
-                    .filter(AdresseLivraison::isPrimary)
-                    .findFirst().orElse(null);
+        return adresses.stream()
+                .filter(AdresseLivraison::isPrimary)
+                .findFirst().orElse(null);
 
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass() || id == null ) return false;
+        if (o == null || getClass() != o.getClass() || id == null) return false;
 
         Client obj = (Client) o;
 

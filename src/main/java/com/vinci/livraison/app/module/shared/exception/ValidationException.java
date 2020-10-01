@@ -7,7 +7,7 @@ import java.util.Map;
 @Getter
 public class ValidationException extends RuntimeException {
 
-    Map<String,Object> errors;
+    Map<String, Object> errors;
 
     public ValidationException(String message, Map<String, Object> errors) {
         super(message);
