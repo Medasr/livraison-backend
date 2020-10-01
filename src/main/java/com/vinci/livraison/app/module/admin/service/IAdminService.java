@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface IAdminService {
 
-    Admin create(CreateAdminForm form);
-
     Admin updateLogin(Admin admin,String login);
 
     Admin updatePassword(Admin admin,String password,String newPassword);

@@ -19,14 +19,6 @@ public class AdminService implements IAdminService {
     final private AdminRepository adminRepo;
     final private PasswordEncoder encoder;
 
-    @Override
-    public Admin create(CreateAdminForm form) {
-        Admin admin = new Admin();
-        admin.setDateCreation(LocalDateTime.now());
-        admin.setPassword( encoder.encode( form.getPassword() ) );
-        admin.setLogin(form.getLogin());
-        return adminRepo.save(admin);
-    }
 
     @Override
     public Admin updateLogin(Admin admin, String login) {

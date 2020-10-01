@@ -27,9 +27,6 @@ public class LigneCommande implements Serializable {
 
 
     public LigneCommande(Commande commande, Article article, byte quantite) {
-        Assert.isTrue(commande.getRestaurateur().getId() != article.getRestaurateur().getId(),
-            "article not belong to restaurateur"
-        );
         this.commande = commande;
         this.article = article;
         this.quantite = quantite;

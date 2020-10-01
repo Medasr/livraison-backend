@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface IMenuService {
 
-    Article createMenu(CreateMenuForm form);
+    Article createMenu(Restaurateur restaurateur,CreateMenuForm form);
 
     Optional<Article> findMenuByIdAndRestaurateur(Long idMenu , Restaurateur restaurateur);
 
@@ -19,8 +19,8 @@ public interface IMenuService {
 
     Article loadMenuProduits(Article menu);
 
-    Article addProduitToMenu(Article Menu,Article Produit);
+    Article addProduitToExistingMenu(Article Menu, Article Produit);
 
-    void removeProduitFRomMenu(Article Menu,Article Produit);
+    void removeProduitFromExistingMenu(Article Menu, Article Produit);
 
 }

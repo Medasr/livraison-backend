@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface CategorieRepository extends JpaRepository<Categorie,Long> {
@@ -19,6 +20,8 @@ public interface CategorieRepository extends JpaRepository<Categorie,Long> {
     Optional<Categorie> findCategorieByIdAndRestaurateur(long id, Restaurateur restaurateur);
 
     Page<Categorie> findCategoriesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
+
+    Set<Categorie> findCategoriesByRestaurateurAndIdIn(Restaurateur restaurateur, Set<Long> ids);
 
 
 }

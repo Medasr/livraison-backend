@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface IPruduitService {
 
-    Article createProduit(CreateProduitForm form);
+    Article createProduit(Restaurateur restaurateur,CreateProduitForm form);
 
     Optional<Article> findProduitByIdAndRestaurateur(Long idProduit , Restaurateur restaurateur);
 
-    Page<Article> findProduitsByRestaurateur(Restaurateur restaurateur);
+    Page<Article> findProduitsByRestaurateur(Restaurateur restaurateur,Pageable pageable);
 
 }

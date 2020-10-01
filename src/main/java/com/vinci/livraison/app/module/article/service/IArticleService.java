@@ -11,19 +11,17 @@ import java.util.Optional;
 
 public interface IArticleService {
 
-    Page<Article> findArticleByIdAndRestaurateur(Long idArticle , Restaurateur restaurateur, Pageable pageable);
+    Optional<Article> findArticleByIdAndRestaurateur(Long idArticle , Restaurateur restaurateur);
 
     Page<Article> findArticlesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
     Page<Article> findArticlesByCategorie(Categorie categorie, Pageable pageable);
 
-    Optional<Article> findArticleByIdAndRestaurateur(Long id,Categorie categorie);
-
     Article loadArticleCategories(Article article);
 
-    Article addCategorieToArticle(Article article,Categorie categorie);
+    Article addCategorieToExistingArticle(Article article, Categorie categorie);
 
-    void removeCategorieFromArticle(Article article,Categorie categorie);
+    void removeCategorieFromExistingArticle(Article article, Categorie categorie);
 
 
 

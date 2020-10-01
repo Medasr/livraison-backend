@@ -7,13 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface ICategorieService {
 
-    Categorie createCategorie(@Nullable Categorie nullableCategorieMere , CreateCategorieForm form);
+    Categorie createCategorie(Restaurateur restaurateur,@Nullable Categorie nullableCategorieMere , CreateCategorieForm form);
 
     Page<Categorie> findCategoriesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
-    Page<Categorie> findCategoriesByCategoriesMere(Categorie categorie, Pageable pageable);
+    List<Categorie> findCategoriesByCategoriesMere(Categorie categorie);
 
     Categorie updateCategorie(Categorie categorie, String nouveauTitre);
+
+    Optional<Categorie> findCategorieByIdAndRestaurateur(long id,Restaurateur restaurateur);
 }

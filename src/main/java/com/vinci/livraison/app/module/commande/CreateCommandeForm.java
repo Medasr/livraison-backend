@@ -10,6 +10,7 @@ public class CreateCommandeForm {
 
     Long idClient;
     Long idRestaurateur;
+    String commentaire;
 
     Set<LigneCommande> lignesCommande;
 

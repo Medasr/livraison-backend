@@ -44,13 +44,6 @@ public class Commande implements Serializable {
 
     private LocalDateTime dateHeurAnnulation;
 
-    private boolean pasDeReponse;
-
-    public boolean getNoResponse(){
-
-        return dateHeureCreation.isBefore(LocalDateTime.now().minusMinutes(30));
-    }
-
     private LocalDateTime dateHeurPreparation;
 
     private LocalDateTime dateHeurAttendeLivreur;
