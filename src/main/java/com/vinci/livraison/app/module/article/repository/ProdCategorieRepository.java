@@ -27,7 +27,7 @@ public interface ProdCategorieRepository extends JpaRepository<ProdCat, Long> {
 
 
     //
-    Optional<ProdCat> FindByArticleAndCategorie(Article article, Categorie categorie);
+    Optional<ProdCat> findByArticleAndCategorie(Article article, Categorie categorie);
 
 
     long countByArticle(Article article);

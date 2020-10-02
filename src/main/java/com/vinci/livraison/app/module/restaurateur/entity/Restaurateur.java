@@ -50,8 +50,8 @@ public class Restaurateur implements Serializable {
     @JoinColumn(name = "id_restaurateur_user")
     private RestaurateurUser restaurateurUser;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "restaurateur", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<RestaurateurType> RestaurateurTypes = new HashSet<>();
 
     @Transient

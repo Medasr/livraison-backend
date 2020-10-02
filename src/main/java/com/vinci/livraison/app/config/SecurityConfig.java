@@ -43,15 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    @Bean
+
     @Override
+    @Bean("authenticationManager")
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        return super.authenticationManager();
+        // return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         super.configure(auth);
         /* TODO add AuthProviders
         auth.authenticationProvider( muCustomProvider );*/

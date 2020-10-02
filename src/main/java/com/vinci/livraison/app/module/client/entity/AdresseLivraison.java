@@ -1,6 +1,7 @@
 package com.vinci.livraison.app.module.client.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +40,8 @@ public class AdresseLivraison implements Serializable {
     @Embeddable
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class GeoLocation implements Serializable {
         @Column(name = "latitude")
         private Double latitude;

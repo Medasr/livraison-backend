@@ -24,7 +24,8 @@ spring:
 logging:
   level:
     web: debug
-
+debug: true
 app.regex:
   username: "^(?!.*\\.\\.)(?!.*\\.$)[^\\W][\\w.]{8,32}"
   telephone: "^(\\+212|0)[5-7]{1}[0-9]{8}$"
+

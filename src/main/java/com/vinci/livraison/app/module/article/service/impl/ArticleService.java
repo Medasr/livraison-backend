@@ -84,7 +84,7 @@ public class ArticleService implements IArticleService, IPruduitService, IMenuSe
     @Override
     public void removeCategorieFromExistingArticle(Article article, Categorie categorie) {
 
-        prodCat$.FindByArticleAndCategorie(article, categorie).map(prodCat1 -> {
+        prodCat$.findByArticleAndCategorie(article, categorie).map(prodCat1 -> {
 
             if (prodCat$.countByArticle(article) > 1) {
                 throw new ArticleCantHaveNoCategorie("Article doit appartenir au moins a une seul categorie");
