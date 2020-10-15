@@ -1,5 +1,6 @@
 package com.vinci.livraison.app.module.livreur.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import com.vinci.livraison.app.module.shared.User;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Livreur extends User {
     @Column(nullable = false, unique = true)
     private String tel;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_restaurateur")
     private Restaurateur restaurateur;

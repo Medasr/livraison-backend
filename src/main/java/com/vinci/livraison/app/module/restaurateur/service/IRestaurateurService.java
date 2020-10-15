@@ -13,13 +13,13 @@ import java.util.Optional;
 
 public interface IRestaurateurService {
 
-    Restaurateur createRestaurateur(Enseigne enseigne, CreateEnseigneForm.Restaurateur restaurateur);
+    Restaurateur createRestaurateur(Enseigne enseigne, CreateRestaurateurForm form, boolean isEnseigne);
 
     Restaurateur createRestaurateur(Enseigne enseigne, CreateRestaurateurForm form);
 
     List<Restaurateur> createRestaurateurs(Enseigne enseigne, List<CreateRestaurateurForm> forms);
 
-    Optional<Restaurateur> findRestaurateurById(Long id);
+    Optional<Restaurateur> findActiveRestaurateurById(Long id);
 
     Optional<Restaurateur> findRestaurateurWithScore(Long id);
 

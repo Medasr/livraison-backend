@@ -12,15 +12,15 @@ public interface ILivreurService {
 
     Optional<Livreur> findLivreurById(long id);
 
-    Optional<Livreur> findLivreurByIdAndRestaurateur(long id,Restaurateur restaurateur);
+    Optional<Livreur> findLivreurByIdAndRestaurateur(long id, Restaurateur restaurateur);
 
     Page<Livreur> findLivreursByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
     Livreur createLivreur(Restaurateur restaurateur, CreateLivreurForm form);
 
-    Livreur updateNumTel(Livreur livreur,String tel);
+    Livreur updateNumTel(Livreur livreur, String tel);
 
-    Livreur updatePassword(Livreur livreur,String password ,String newPassword );
+    Livreur updatePassword(Livreur livreur, String password, String newPassword);
 
 
 }

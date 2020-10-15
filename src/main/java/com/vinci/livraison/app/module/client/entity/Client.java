@@ -1,5 +1,6 @@
 package com.vinci.livraison.app.module.client.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinci.livraison.app.module.shared.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Client extends User {
 
     private String tel;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AdresseLivraison> adresses = new HashSet<>();
 
@@ -45,7 +47,7 @@ public class Client extends User {
     }
 
     public void deleteAdresse(AdresseLivraison adresse) {
-        adresses.removeIf(adresseLivraison -> adresse.getId() == adresseLivraison.getId());
+        adresses.removeIf(adresseLivraison -> adresse.getId().equals(adresseLivraison.getId()));
     }
 
     public AdresseLivraison getPrimaryAdresse() {

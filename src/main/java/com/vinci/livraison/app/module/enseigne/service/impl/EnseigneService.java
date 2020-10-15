@@ -45,7 +45,7 @@ public class EnseigneService implements IEnseigneService {
         enseigne = enseigne$.save(enseigne);
 
         if (form.getRestaurateur() != null) {
-            restaurateur$.createRestaurateur(enseigne, form.getRestaurateur());
+            restaurateur$.createRestaurateur(enseigne, form.getRestaurateur(),true);
         }
 
         return enseigne;

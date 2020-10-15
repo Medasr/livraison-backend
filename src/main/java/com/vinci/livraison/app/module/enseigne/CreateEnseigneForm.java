@@ -1,5 +1,6 @@
 package com.vinci.livraison.app.module.enseigne;
 
+import com.vinci.livraison.app.module.restaurateur.CreateRestaurateurForm;
 import lombok.Getter;
 
 import java.util.Set;
@@ -9,13 +10,6 @@ public class CreateEnseigneForm {
 
     private String nom, nomContact, email;
     private byte nbrMaxRestaurateur;
-    private Restaurateur restaurateur;
+    private CreateRestaurateurForm restaurateur;
 
-
-    @Getter
-    public static class Restaurateur {
-        private String nom, adresse, login, password;
-        private Long idVille;
-        private Set<Long> types;
-    }
 }

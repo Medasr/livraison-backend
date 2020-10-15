@@ -31,7 +31,7 @@ public class LivreurService implements ILivreurService {
 
     @Override
     public Optional<Livreur> findLivreurByIdAndRestaurateur(long id, Restaurateur restaurateur) {
-        return livreur$.findByIdAndRestaurateur(id,restaurateur);
+        return livreur$.findByIdAndRestaurateur(id, restaurateur);
     }
 
 
@@ -43,7 +43,7 @@ public class LivreurService implements ILivreurService {
     @Override
     public Livreur createLivreur(Restaurateur restaurateur, CreateLivreurForm form) {
 
-        Livreur livreur = new Livreur(form.getLogin(), form.getPassword(), form.getCin(), form.getNom(),form.getTel());
+        Livreur livreur = new Livreur(form.getLogin(), form.getPassword(), form.getCin(), form.getNom(), form.getTel());
 
         livreur.setRestaurateur(restaurateur);
 
@@ -61,7 +61,7 @@ public class LivreurService implements ILivreurService {
     @Override
     public Livreur updatePassword(Livreur livreur, String password, String newPassword) {
 
-        if(!encoder.matches(password, livreur.getPassword())){
+        if (!encoder.matches(password, livreur.getPassword())) {
             throw new BadCredentialsException("Mot de passe non valide");
         }
 

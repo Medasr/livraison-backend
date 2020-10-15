@@ -15,7 +15,7 @@ public interface LivreurRepository extends UserRepository<Livreur> {
 
     Page<Livreur> findAllByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
-    Optional<Livreur> findByIdAndRestaurateur(long id,Restaurateur restaurateur);
+    Optional<Livreur> findByIdAndRestaurateur(long id, Restaurateur restaurateur);
 
     Page<Livreur> findAllByRestaurateurAndNomContainsIgnoreCase(Restaurateur restaurateur, String nom, Pageable pageable);
 

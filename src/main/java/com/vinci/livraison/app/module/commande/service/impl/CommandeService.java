@@ -3,16 +3,19 @@ package com.vinci.livraison.app.module.commande.service.impl;
 
 import com.vinci.livraison.app.module.article.repository.ArticleRepository;
 import com.vinci.livraison.app.module.client.entity.Client;
+import com.vinci.livraison.app.module.commande.CreateClientCommandeForm;
 import com.vinci.livraison.app.module.commande.CreateCommandeForm;
 import com.vinci.livraison.app.module.commande.entity.Commande;
 import com.vinci.livraison.app.module.commande.entity.LigneCommande;
 import com.vinci.livraison.app.module.commande.exception.CommandeCantHaveNoLigneCommande;
+import com.vinci.livraison.app.module.commande.exception.UnableToUpdateCommandeEtat;
 import com.vinci.livraison.app.module.commande.repository.CommandeRepository;
 import com.vinci.livraison.app.module.commande.service.ICommandeClientService;
 import com.vinci.livraison.app.module.commande.service.ICommandeRestaurateurService;
 import com.vinci.livraison.app.module.commande.service.ICommandeService;
 import com.vinci.livraison.app.module.livreur.entity.Livreur;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
+import com.vinci.livraison.app.security.authentications.UserType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,11 +25,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.vinci.livraison.app.module.commande.entity.Commande.CanceledBy.CLIENT;
+import static com.vinci.livraison.app.module.commande.entity.Commande.CanceledBy.RESTAURATEUR;
 import static com.vinci.livraison.app.module.commande.entity.Commande.Etat.*;
 
 @Service
 @Transactional
-public class CommandService implements ICommandeService, ICommandeClientService, ICommandeRestaurateurService {
+public class CommandeService implements ICommandeService, ICommandeClientService, ICommandeRestaurateurService {
 
     CommandeRepository commande$;
     ArticleRepository article$;
@@ -39,7 +44,11 @@ public class CommandService implements ICommandeService, ICommandeClientService,
         commande.setClient(client);
         commande.setRestaurateur(restaurateur);
         commande.setDateHeureCreation(LocalDateTime.now());
-        commande.setCommentaire(form.getCommentaire());
+        if( (form instanceof CreateClientCommandeForm) ){
+            String commentaire = ( (CreateClientCommandeForm) form ).getCommentaire();
+            commande.setCommentaire(commentaire);
+        }
+
 
         Set<LigneCommande> lignesCommande = form.getLignesCommande().stream().map(ligneCommande ->
                 article$.findArticleByIdAndRestaurateur(ligneCommande.getIdArticle(), restaurateur)
@@ -50,7 +59,7 @@ public class CommandService implements ICommandeService, ICommandeClientService,
                 .collect(Collectors.toSet());
 
         if (lignesCommande.isEmpty()) {
-            throw new CommandeCantHaveNoLigneCommande("");
+            throw new CommandeCantHaveNoLigneCommande("la commande doit contenir au moins un article");
         }
 
         double prix = lignesCommande
@@ -85,6 +94,48 @@ public class CommandService implements ICommandeService, ICommandeClientService,
         return commande$.findAllByRestaurateurShutDownFalseAndClientAndEtat(client, LIVREE, pageable);
     }
 
+    @Override
+    public Commande annulerCommandeByClient(Commande commande) {
+        if (!commande.getEtat().equals(CREER)) {
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas annuler la commande [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+        }
+
+        commande.setDateHeurAnnulation(LocalDateTime.now());
+        commande.setEtat(ANNULEE);
+        commande.setCanceledBy(CLIENT);
+        commande.setClosed(true);
+
+        return commande$.save(commande);
+    }
+
+    @Override
+    public Commande refuserLaCommande(Commande commande, String motifs) {
+
+        if (!commande.getEtat().equals(EN_ATTENDE_LIVRAISON)) {
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas refuser Livraison [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+        }
+
+        commande.setDateHeurLivraison(LocalDateTime.now());
+        commande.setEtat(LIVREE);
+        commande.setClosed(true);
+
+        return commande$.save(commande);
+
+    }
+
+    @Override
+    public Commande accuserLaReceptionDeLivraison(Commande commande, Byte scoreRestaurateur, Byte scoreLivreur) {
+        if (!commande.getEtat().equals(EN_ATTENDE_LIVRAISON)) {
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas assucer la reception de Livraison [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+        }
+
+        commande.setDateHeurLivraison(LocalDateTime.now());
+        commande.setEtat(LIVREE);
+        commande.setClosed(true);
+
+        return commande$.save(commande);
+    }
+
 
     @Override
     public Optional<Commande> findCommandeByIdAndRestaurateur(long id, Restaurateur restaurateur) {
@@ -97,13 +148,12 @@ public class CommandService implements ICommandeService, ICommandeClientService,
     }
 
     @Override
-    public Commande annulerCommande(Commande commande) {
-
-        if (!commande.getEtat().equals(ANNULEE)) {
-            // TODO
-            throw new RuntimeException("tu ne peux pas annuller la commande [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+    public Commande annulerCommandeByRestaurateur(Commande commande) {
+        if (!commande.getEtat().equals(CREER)) {
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas annuller la commande [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
         }
 
+        commande.setCanceledBy(RESTAURATEUR);
         commande.setDateHeurAnnulation(LocalDateTime.now());
         commande.setEtat(ANNULEE);
 
@@ -114,8 +164,7 @@ public class CommandService implements ICommandeService, ICommandeClientService,
     public Commande approverCommande(Commande commande) {
 
         if (!commande.getEtat().equals(CREER)) {
-            // TODO
-            throw new RuntimeException("tu ne peux pas approver la commande [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas approver la commande [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
         }
         commande.setDateHeurPreparation(LocalDateTime.now());
         commande.setEtat(EN_COURS_PREPARATION);
@@ -131,8 +180,7 @@ public class CommandService implements ICommandeService, ICommandeClientService,
     @Override
     public Commande commandePrete(Commande commande) {
         if (!commande.getEtat().equals(EN_COURS_PREPARATION)) {
-            // TODO
-            throw new RuntimeException("tu ne peux pas passer la commande pour livraison [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas passer la commande pour livraison [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
         }
         commande.setDateHeurAttendeLivreur(LocalDateTime.now());
         commande.setEtat(EN_ATTENDE_LIVREUR);
@@ -148,13 +196,11 @@ public class CommandService implements ICommandeService, ICommandeClientService,
     public Commande affecterCommandeAuLiveur(Commande commande, Livreur livreur) {
 
         if (!commande.getEtat().equals(EN_ATTENDE_LIVREUR)) {
-            // TODO
-            throw new RuntimeException("tu ne peux pas passer la commande au livreur [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
+            throw new UnableToUpdateCommandeEtat("tu ne peux pas passer la commande au livreur [ l'état actuel de la commande : " + commande.getEtat().name() + " ]");
         }
 
         if (!commande.getRestaurateur().equals(livreur.getRestaurateur())) {
-            // TODO
-            throw new RuntimeException("Liveur n'appartient pas au restaurateur");
+            throw new UnableToUpdateCommandeEtat("Liveur n'appartient pas au restaurateur");
         }
 
         commande.setEtat(EN_ATTENDE_LIVRAISON);
@@ -173,5 +219,9 @@ public class CommandService implements ICommandeService, ICommandeClientService,
     @Override
     public Page<Commande> findLivredCommandesByRestaurateur(Restaurateur restaurateur, Pageable pageable) {
         return commande$.findAllByRestaurateurAndEtat(restaurateur, LIVREE, pageable);
+    }
+
+    public void closeUnansweredCommande() {
+        commande$.closeUnrespondedCommandeBefore(CREER,LocalDateTime.now().minusHours(1));
     }
 }

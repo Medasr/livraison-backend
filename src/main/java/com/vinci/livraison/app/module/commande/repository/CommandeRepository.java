@@ -8,8 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -54,4 +57,7 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
     Page<Commande> findAllByLivreurAndEtat(Livreur livreur, Commande.Etat Etats, Pageable pageable);
 
 
+    @Modifying
+    @Query("UPDATE Commande SET closed = true WHERE etat = ?1 AND closed = false AND dateHeureCreation < ?2")
+    void closeUnrespondedCommandeBefore(Commande.Etat etat,LocalDateTime o);
 }

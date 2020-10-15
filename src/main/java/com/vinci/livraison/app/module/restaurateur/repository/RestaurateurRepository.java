@@ -29,7 +29,7 @@ public interface RestaurateurRepository extends JpaRepository<Restaurateur, Long
 
     @Modifying
     @Query("update Restaurateur as r set r.shutDown = true where r.enseigne = ?1")
-    long shutdownResteurateursByEnseigne(Enseigne enseigne);
+    void shutdownResteurateursByEnseigne(Enseigne enseigne);
 
     @Query("SELECT new com.vinci.livraison.app.module.restaurateur.Score( AVG(c.scoreRestaurateur)  , AVG(c.scoreLivreur) ) from Commande c  where c.restaurateur = ?1 GROUP BY c.restaurateur")
     Optional<Score> getRestaurateurScore(Restaurateur restaurateur);
@@ -52,6 +52,8 @@ public interface RestaurateurRepository extends JpaRepository<Restaurateur, Long
 
     //nbr of active Restaurateurs
     long countAllByShutDown(boolean shutdown);
+
+    boolean existsByVille(Ville ville);
 
     @EntityGraph(attributePaths = {"restaurateurTypes.type", "restaurateurUser", "ville"})
     Optional<Restaurateur> findRestaurateurByIdAndEnseigne(Long id, Enseigne enseigne);

@@ -1,7 +1,6 @@
 package com.vinci.livraison.app.module.restaurateur.service.impl;
 
 
-import com.vinci.livraison.app.module.enseigne.CreateEnseigneForm;
 import com.vinci.livraison.app.module.enseigne.entity.Enseigne;
 import com.vinci.livraison.app.module.enseigne.repository.EnseigneRepository;
 import com.vinci.livraison.app.module.restaurateur.CreateRestaurateurForm;
@@ -41,12 +40,12 @@ public class RestaurateurService implements IRestaurateurService {
     PasswordEncoder encoder;
 
     @Override
-    public Restaurateur createRestaurateur(Enseigne enseigne, CreateEnseigneForm.Restaurateur form) {
+    public Restaurateur createRestaurateur(Enseigne enseigne, CreateRestaurateurForm form, boolean isEnseigne) {
         Map<String, Object> errors = new HashMap<>();
 
         Ville ville = ville$.findById(form.getIdVille()).orElse(null);
         if (ville == null) {
-            errors.put("idVille", "Ville n'esxiste pas");
+            errors.put("idVille", "Ville n'existe pas");
         }
 
         List<Type> types = type$.findAllById(form.getTypes());
@@ -61,7 +60,13 @@ public class RestaurateurService implements IRestaurateurService {
 
         if (errors.isEmpty()) {
             Restaurateur restaurateur = new Restaurateur();
-            createRestaurateur(restaurateur, ville, new HashSet<>(types), enseigne);
+            restaurateur.setVille(ville);
+            restaurateur.setEnseigne(enseigne);
+            restaurateur.setTypes(new HashSet<>(types));
+            types.forEach(type -> restaurateur
+                    .getRestaurateurTypes()
+                    .add(new RestaurateurType(type, restaurateur))
+            );
 
             RestaurateurUser user = new RestaurateurUser();
             user.setDateCreation(LocalDateTime.now());
@@ -69,13 +74,14 @@ public class RestaurateurService implements IRestaurateurService {
             user.setPassword(encoder.encode(form.getPassword()));
 
             restaurateur.setRestaurateurUser(user);
-            restaurateur.setIsenseigne(true);
+            restaurateur.setIsenseigne(isEnseigne);
             restaurateur.setNom(form.getNom());
             restaurateur.setAdresse(form.getAdresse());
             restaurateur.setShutDown(false);
 
             return restaurateur$.save(restaurateur);
         }
+
 
 
         throw new ValidationException("invalid", errors);
@@ -85,20 +91,7 @@ public class RestaurateurService implements IRestaurateurService {
 
     @Override
     public Restaurateur createRestaurateur(Enseigne enseigne, CreateRestaurateurForm form) {
-        return null;
-    }
-
-    private Restaurateur createRestaurateur(Restaurateur restaurateur, Ville ville, Set<Type> types, Enseigne enseigne) {
-
-        restaurateur.setVille(ville);
-        restaurateur.setEnseigne(enseigne);
-        restaurateur.setTypes(types);
-        types.forEach(type -> restaurateur
-                .getRestaurateurTypes()
-                .add(new RestaurateurType(type, restaurateur))
-        );
-
-        return restaurateur;
+        return createRestaurateur(enseigne, form,false);
     }
 
     @Override
@@ -117,16 +110,20 @@ public class RestaurateurService implements IRestaurateurService {
             }
         }
 
-        if (errors.isEmpty()) {
-
+        if (!errors.isEmpty()) {
+            throw new ValidationException("Validation échoue",errors);
         }
 
-        return restaurateurs;
+        return restaurateur$.saveAll(restaurateurs);
 
     }
 
+    /**
+     * get active restaurateur with types
+     *
+     * */
     @Override
-    public Optional<Restaurateur> findRestaurateurById(Long id) {
+    public Optional<Restaurateur> findActiveRestaurateurById(Long id) {
         return restaurateur$.findRestaurateurByShutDownIsFalseAndId(id)
                 .map(restaurateur -> {
                     restaurateur.setTypes(restaurateur
@@ -139,9 +136,13 @@ public class RestaurateurService implements IRestaurateurService {
                 });
     }
 
+    /**
+     * get active restaurateur with types and score
+     *
+     * */
     @Override
     public Optional<Restaurateur> findRestaurateurWithScore(Long id) {
-        return findRestaurateurById(id).map(restaurateur -> {
+        return findActiveRestaurateurById(id).map(restaurateur -> {
             restaurateur$.getRestaurateurScore(restaurateur)
                     .ifPresent(score -> {
                         restaurateur.setScoreRestaurateur(score.getScoreRestaurateur());
@@ -183,5 +184,8 @@ public class RestaurateurService implements IRestaurateurService {
         return restaurateur$.findAllByEnseigneAndShutDown(enseigne, shutdown, pageable);
     }
 
+    public boolean existsByVille(Ville ville){
+        return restaurateur$.existsByVille(ville);
+    }
 
 }

@@ -2,19 +2,19 @@ package com.vinci.livraison.app.module.commande;
 
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Getter
+@Setter
 public class CreateCommandeForm {
 
-    Long idClient;
-    Long idRestaurateur;
-    String commentaire;
 
     Set<LigneCommande> lignesCommande;
 
     @Getter
+    @Setter
     public static class LigneCommande {
 
         Long idArticle;

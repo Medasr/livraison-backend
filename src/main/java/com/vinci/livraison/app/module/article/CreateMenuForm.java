@@ -2,15 +2,13 @@ package com.vinci.livraison.app.module.article;
 
 import lombok.Getter;
 
+import javax.validation.constraints.*;
 import java.util.Set;
 
 @Getter
-public class CreateMenuForm {
+public class CreateMenuForm extends CreateProduitForm {
 
-    Long idRestaurateur;
-    String titre;
-    Double prix;
-
-    Set<Long> categories;
+    @NotEmpty
     Set<Long> produits;
+
 }

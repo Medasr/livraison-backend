@@ -1,8 +1,10 @@
 package com.vinci.livraison.app.module.commande.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinci.livraison.app.module.client.entity.Client;
 import com.vinci.livraison.app.module.livreur.entity.Livreur;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
+import com.vinci.livraison.app.security.authentications.UserType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -41,6 +43,9 @@ public class Commande implements Serializable {
     @Column(nullable = false, updatable = false)
     private LocalDateTime dateHeureCreation;
 
+    @Enumerated(EnumType.STRING)
+    private CanceledBy canceledBy;
+
     private LocalDateTime dateHeurAnnulation;
 
     private LocalDateTime dateHeurPreparation;
@@ -51,6 +56,9 @@ public class Commande implements Serializable {
 
     private LocalDateTime dateHeurLivraison;
 
+    private boolean closed = false;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
     private Set<LigneCommande> ligneCommandes;
 
@@ -90,6 +98,10 @@ public class Commande implements Serializable {
         EN_ATTENDE_LIVREUR,
         EN_ATTENDE_LIVRAISON,
         LIVREE
+    }
+
+    public enum CanceledBy{
+        CLIENT,RESTAURATEUR
     }
 }
 

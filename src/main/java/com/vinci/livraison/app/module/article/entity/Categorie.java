@@ -1,5 +1,6 @@
 package com.vinci.livraison.app.module.article.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,12 @@ public class Categorie implements Serializable {
     @Column(nullable = false)
     private String titre;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categorie_mere")
     private Categorie categorieMere;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_restaurateur", nullable = false, updatable = false)
     private Restaurateur restaurateur;

@@ -14,7 +14,7 @@ public interface ICommandeRestaurateurService {
 
     Page<Commande> findCreatedCommandesByRestaurateur(Restaurateur restaurateur, Pageable pageable);
 
-    Commande annulerCommande(Commande commande);
+    Commande annulerCommandeByRestaurateur(Commande commande);
 
     Commande approverCommande(Commande commande);
 

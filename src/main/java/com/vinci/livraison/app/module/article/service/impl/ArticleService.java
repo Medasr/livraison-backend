@@ -71,7 +71,7 @@ public class ArticleService implements IArticleService, IPruduitService, IMenuSe
 
         if (prodCat$.existsByArticleAndCategorie(article, categorie)) {
 
-            throw new ProdCatAlreadyExistsException("");
+            throw new ProdCatAlreadyExistsException("Categorie est deja ");
         }
 
         ProdCat prodCat = new ProdCat(article, categorie);

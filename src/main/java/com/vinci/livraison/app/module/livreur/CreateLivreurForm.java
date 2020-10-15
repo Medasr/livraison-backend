@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class CreateLivreurForm {
 
-    String login,password,nom,cin,tel;
+    String login, password, nom, cin, tel;
 }

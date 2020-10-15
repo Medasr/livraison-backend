@@ -11,11 +11,19 @@ public interface ICommandeClientService {
 
     Optional<Commande> findCommandeByIdAndClient(long id, Client client);
 
+
+
     Page<Commande> findCreatedCommandesByClient(Client client, Pageable pageable);
 
     Page<Commande> findPendingCommandesByClient(Client client, Pageable pageable);
 
     Page<Commande> findLivredCommandesByClient(Client client, Pageable pageable);
+
+    Commande annulerCommandeByClient(Commande commande);
+
+    Commande refuserLaCommande(Commande commande,String motifs);
+
+    Commande accuserLaReceptionDeLivraison(Commande commande,Byte scoreRestaurateur,Byte scoreLivreur);
 
 
 }

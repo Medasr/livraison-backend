@@ -29,7 +29,7 @@ public class Restaurateur implements Serializable {
     @Column(nullable = false)
     private String adresse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ville", nullable = false)
     private Ville ville;
 
@@ -50,9 +50,9 @@ public class Restaurateur implements Serializable {
     @JoinColumn(name = "id_restaurateur_user")
     private RestaurateurUser restaurateurUser;
 
-    @OneToMany(mappedBy = "restaurateur", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<RestaurateurType> RestaurateurTypes = new HashSet<>();
+    @OneToMany(mappedBy = "restaurateur", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RestaurateurType> restaurateurTypes = new HashSet<>();
 
     @Transient
     private Set<Type> types;

@@ -26,7 +26,6 @@ public interface ProdCategorieRepository extends JpaRepository<ProdCat, Long> {
     boolean existsByArticleAndCategorie(Article article, Categorie categorie);
 
 
-    //
     Optional<ProdCat> findByArticleAndCategorie(Article article, Categorie categorie);
 
 
