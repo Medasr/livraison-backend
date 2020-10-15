@@ -16,6 +16,7 @@ import com.vinci.livraison.app.module.commande.service.ICommandeService;
 import com.vinci.livraison.app.module.livreur.entity.Livreur;
 import com.vinci.livraison.app.module.restaurateur.entity.Restaurateur;
 import com.vinci.livraison.app.security.authentications.UserType;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import static com.vinci.livraison.app.module.commande.entity.Commande.Etat.*;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class CommandeService implements ICommandeService, ICommandeClientService, ICommandeRestaurateurService {
 
     CommandeRepository commande$;
