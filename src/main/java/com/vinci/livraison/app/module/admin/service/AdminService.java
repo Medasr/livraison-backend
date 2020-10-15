@@ -5,6 +5,7 @@ import com.vinci.livraison.app.module.admin.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +34,7 @@ public class AdminService implements IAdminService {
     public Admin updatePassword(Admin admin, String password, String newPassword) {
 
         if (!encoder.matches(password, admin.getPassword())) {
-            // TODO :: use custom Exception
-            throw new RuntimeException("Password est incorrect");
+            throw new BadCredentialsException("Password est incorrect");
         }
 
         admin.setPassword(encoder.encode(newPassword));
